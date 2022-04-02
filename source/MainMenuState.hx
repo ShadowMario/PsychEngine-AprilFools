@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.5.2h'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '0.5.3b'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -47,9 +47,12 @@ class MainMenuState extends MusicBeatState
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
 
+	var blammableObjects:Array<FlxSprite> = [];
+
 	override function create()
 	{
 		WeekData.loadTheFirstEnabledMod();
+		Conductor.changeBPM(165);
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -71,13 +74,15 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.color = TitleState.blammedLightsColors[0];
 		add(bg);
+		blammableObjects.push(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -169,6 +174,9 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
+		
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -293,5 +301,33 @@ class MainMenuState extends MusicBeatState
 				spr.centerOffsets();
 			}
 		});
+	}
+
+	var curLight:Int = 0;
+	public static var blammedLightsColors:Array<FlxColor> = [
+		0xff31a2fd, //blue
+		0xff31fd8c, //Green
+		0xfff794f7, //Pink
+		0xfff96d63, //Red
+		0xfffba633 //Orange
+	];
+
+	override function beatHit()
+	{
+		if (curBeat % 4 == 0) 
+		{
+			var randomNum:Int = FlxG.random.int(0, TitleState.blammedLightsColors.length-1, [curLight]);
+			var blamColor:FlxColor = TitleState.blammedLightsColors[randomNum];
+			for (spr in blammableObjects)
+			{
+				spr.color = blamColor;
+			}
+			curLight = randomNum;
+
+			FlxG.camera.zoom = 1.15;
+			FlxTween.tween(FlxG.camera, {zoom: 1}, 0.5, {ease: FlxEase.circOut});
+		}
+
+		super.beatHit();
 	}
 }

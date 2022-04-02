@@ -251,7 +251,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 
-		Conductor.changeBPM(titleJSON.bpm);
+		Conductor.changeBPM(165);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
@@ -274,6 +274,7 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
+		logoBl.color = blammedLightsColors[0];
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
@@ -311,6 +312,7 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
+		gfDance.color = blammedLightsColors[0];
 		
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
@@ -554,11 +556,21 @@ class TitleState extends MusicBeatState
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	public static var closedState:Bool = false;
+
+	var curLight:Int = 0;
+	public static var blammedLightsColors:Array<FlxColor> = [
+		0xff31a2fd, //blue
+		0xff31fd8c, //Green
+		0xfff794f7, //Pink
+		0xfff96d63, //Red
+		0xfffba633 //Orange
+	];
+
 	override function beatHit()
 	{
 		super.beatHit();
 
-		if(logoBl != null) 
+		if(logoBl != null)
 			logoBl.animation.play('bump', true);
 
 		if(gfDance != null) {
@@ -567,6 +579,18 @@ class TitleState extends MusicBeatState
 				gfDance.animation.play('danceRight');
 			else
 				gfDance.animation.play('danceLeft');
+		}
+		
+		if (curBeat % 4 == 0) 
+		{
+			var randomNum:Int = FlxG.random.int(0, blammedLightsColors.length-1, [curLight]);
+			var blamColor:FlxColor = blammedLightsColors[randomNum];
+			if(gfDance != null)
+				gfDance.color = blamColor;
+			if(logoBl != null)
+				logoBl.color = blamColor;
+
+			curLight = randomNum;
 		}
 
 		if(!closedState) {

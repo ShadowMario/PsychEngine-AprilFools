@@ -2733,6 +2733,59 @@ class PlayState extends MusicBeatState
 				var value:Int = Std.parseInt(value1);
 				if(Math.isNaN(value) || value < 1) value = 1;
 				gfSpeed = value;
+				
+			case 'Blammed Lights Special':
+				stopLights = true;
+				var color:Int = 0xffffffff;
+				var lightId:Int = FlxG.random.int(1, 5, [curLightEvent]);
+				switch(lightId) {
+					case 1: //Blue
+						color = 0xff31a2fd;
+					case 2: //Green
+						color = 0xff31fd8c;
+					case 3: //Pink
+						color = 0xfff794f7;
+					case 4: //Red
+						color = 0xfff96d63;
+					case 5: //Orange
+						color = 0xfffba633;
+				}
+
+				for (spr in members)
+				{
+					if(spr != null /*&& spr.cameras.contains(camGame)*/ && Std.isOfType(spr, FlxSprite))
+					{
+						// ridiculous
+						Reflect.setProperty(spr, 'color', color);
+					}
+				}
+
+				for (note in notes)
+				{
+					if(note != null)
+						note.color = color;
+				}
+				for (note in unspawnNotes)
+				{
+					if(note != null)
+						note.color = color;
+				}
+				for (note in strumLineNotes)
+				{
+					if(note != null)
+						note.color = color;
+				}
+				curLightEvent = lightId;
+				
+				if(curStage == 'philly') {
+					if(phillyCityLightsEvent != null) {
+						phillyCityLightsEvent.forEach(function(spr:BGSprite) {
+							spr.visible = false;
+						});
+						phillyCityLightsEvent.members[lightId - 1].visible = true;
+						phillyCityLightsEvent.members[lightId - 1].alpha = 1;
+					}
+				}
 
 			case 'Blammed Lights':
 				var lightId:Int = Std.parseInt(value1);
@@ -2766,15 +2819,6 @@ class PlayState extends MusicBeatState
 								blammedLightsBlackTween = null;
 							}
 						});
-
-						for (char in chars) {
-							if(char.colorTween != null) {
-								char.colorTween.cancel();
-							}
-							char.colorTween = FlxTween.color(char, 1, FlxColor.WHITE, color, {onComplete: function(twn:FlxTween) {
-								char.colorTween = null;
-							}, ease: FlxEase.quadInOut});
-						}
 					} else {
 						if(blammedLightsBlackTween != null) {
 							blammedLightsBlackTween.cancel();
@@ -2782,12 +2826,6 @@ class PlayState extends MusicBeatState
 						blammedLightsBlackTween = null;
 						blammedLightsBlack.alpha = 1;
 
-						for (char in chars) {
-							if(char.colorTween != null) {
-								char.colorTween.cancel();
-							}
-							char.colorTween = null;
-						}
 						dad.color = color;
 						boyfriend.color = color;
 						if (gf != null)
@@ -2834,15 +2872,6 @@ class PlayState extends MusicBeatState
 								phillyCityLightsEventTween = null;
 							}, ease: FlxEase.quadInOut});
 						}
-					}
-
-					for (char in chars) {
-						if(char.colorTween != null) {
-							char.colorTween.cancel();
-						}
-						char.colorTween = FlxTween.color(char, 1, char.color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
-							char.colorTween = null;
-						}, ease: FlxEase.quadInOut});
 					}
 
 					curLight = 0;
@@ -3860,6 +3889,7 @@ class PlayState extends MusicBeatState
 			note.kill();
 			notes.remove(note, true);
 			note.destroy();
+			triggerEventNote('Blammed Lights Special', '', '');
 		}
 	}
 
@@ -3969,6 +3999,7 @@ class PlayState extends MusicBeatState
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
+				triggerEventNote('Blammed Lights Special', '', '');
 			}
 		}
 	}
@@ -4316,10 +4347,13 @@ class PlayState extends MusicBeatState
 						light.visible = false;
 					});
 
-					curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
+					if(!stopLights)
+					{
+						curLight = FlxG.random.int(0, phillyCityLights.length - 1, [curLight]);
 
-					phillyCityLights.members[curLight].visible = true;
-					phillyCityLights.members[curLight].alpha = 1;
+						phillyCityLights.members[curLight].visible = true;
+						phillyCityLights.members[curLight].alpha = 1;
+					}
 				}
 
 				if (curBeat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
@@ -4515,6 +4549,7 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
+	var stopLights:Bool = false;
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
 }
