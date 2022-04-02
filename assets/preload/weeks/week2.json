@@ -1,20 +1,20 @@
 {
 	"songs": [
-		["Spookeez", "spooky", [34, 51, 68]],
-		["South", "spooky", [34, 51, 68]],
-		["Monster", "monster", [34, 51, 68]]
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]]
 	],
 
 	"weekCharacters": [
-		"spooky",
+		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "halloween",
+	"weekBackground": "philly",
 
-	"storyName": "Spooky Month",
-	"weekBefore": "week1",
-	"weekName": "Week 2",
+	"storyName": "PICO",
+	"weekBefore": "week2",
+	"weekName": "Week 3",
 	"startUnlocked": true,
 
 	"hideStoryMode": false,

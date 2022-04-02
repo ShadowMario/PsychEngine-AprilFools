@@ -1,20 +1,20 @@
 {
 	"songs": [
-		["Satin Panties", "mom", [252, 150, 215]],
-		["High", "mom", [252, 150, 215]],
-		["Milf", "mom", [252, 150, 215]]
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]]
 	],
-	
+
 	"weekCharacters": [
-		"mom",
+		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "limo",
+	"weekBackground": "philly",
 
-	"storyName": "MOMMY MUST MURDER",
-	"weekBefore": "week3",
-	"weekName": "Week 4",
+	"storyName": "PICO",
+	"weekBefore": "week2",
+	"weekName": "Week 3",
 	"startUnlocked": true,
 
 	"hideStoryMode": false,

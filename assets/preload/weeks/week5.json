@@ -1,20 +1,20 @@
 {
 	"songs": [
-		["Cocoa", "parents", [160, 209, 255]],
-		["Eggnog", "parents", [160, 209, 255]],
-		["Winter Horrorland", "monster", [160, 209, 255]]
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]]
 	],
 
 	"weekCharacters": [
-		"parents-christmas",
+		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "christmas",
+	"weekBackground": "philly",
 
-	"storyName": "RED SNOW",
-	"weekBefore": "week4",
-	"weekName": "Week 5",
+	"storyName": "PICO",
+	"weekBefore": "week2",
+	"weekName": "Week 3",
 	"startUnlocked": true,
 
 	"hideStoryMode": false,

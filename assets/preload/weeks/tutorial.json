@@ -1,18 +1,18 @@
 {
 	"songs": [
-		["Tutorial", "gf", [165, 0, 77]]
+		["Blammed", "pico", [148, 22, 83]]
 	],
 
 	"weekCharacters": [
-		"",
+		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "stage",
+	"weekBackground": "philly",
 
-	"storyName": "",
-	"weekBefore": "tutorial",
-	"weekName": "Tutorial",
+	"storyName": "PICO",
+	"weekBefore": "week2",
+	"weekName": "Week 3",
 	"startUnlocked": true,
 
 	"hideStoryMode": false,

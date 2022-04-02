@@ -1,20 +1,20 @@
 {
 	"songs": [
-		["Senpai", "senpai-pixel", [255, 120, 191]],
-		["Roses", "senpai-pixel", [255, 120, 191]],
-		["Thorns", "spirit-pixel", [255, 120, 191]]
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]],
+		["Blammed", "pico", [148, 22, 83]]
 	],
 
 	"weekCharacters": [
-		"senpai",
+		"pico",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "school",
+	"weekBackground": "philly",
 
-	"storyName": "hating simulator ft. moawling",
-	"weekBefore": "week5",
-	"weekName": "Week 6",
+	"storyName": "PICO",
+	"weekBefore": "week2",
+	"weekName": "Week 3",
 	"startUnlocked": true,
 
 	"hideStoryMode": false,
